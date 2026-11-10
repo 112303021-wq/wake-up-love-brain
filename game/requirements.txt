@@ -1,0 +1,4 @@
+# 執行 mock 模式不需要任何套件（只用標準函式庫）。
+# 下面兩個：pytest 跑測試用；anthropic 只有 GAME_LLM=claude 時才需要（Python 3.10+）。
+pytest>=8
+anthropic>=0.40

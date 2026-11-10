@@ -7,6 +7,7 @@
 - **Python 3.9 以上**（實測 3.9.6：伺服器可啟動、全部測試通過）。只用標準函式庫，不需要安裝任何套件。
 - 只有切換到 **Claude 模式**（`GAME_LLM=claude`）才需要 **Python 3.10 以上** 與 `pip install anthropic`，並設定 `ANTHROPIC_API_KEY`。這段程式碼**尚未用真的 API key 實測過**。
 - 測試需要 `pytest`（`pip install pytest`）。
+- 一次裝好測試與 Claude 模式所需套件：`python3 -m venv ../.venv && source ../.venv/bin/activate && pip install -r requirements.txt`（需 Python 3.10+）。
 
 ## 啟動
 
