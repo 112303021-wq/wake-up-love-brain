@@ -1,0 +1,15 @@
+# 只追蹤 game/ 與 personas/，其餘（簡報、討論檔、備份、工具設定）一律忽略
+/*
+!/.gitignore
+!/game/
+!/personas/
+
+# 玩家存檔（含暱稱與對話）、舊版備份、快取
+game/saves/*
+!game/saves/.gitkeep
+game/static_*/
+__pycache__/
+.pytest_cache/
+.DS_Store
+*.pyc
+.Rhistory

@@ -1,0 +1,8 @@
+.DS_Store
+.pytest_cache/
+__pycache__/
+*.pyc
+# 玩家存檔含暱稱與對話，不入版控（目錄本身保留）
+saves/*.json
+saves/*.json.corrupt-*
+saves/.*.tmp
