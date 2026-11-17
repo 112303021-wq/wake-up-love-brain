@@ -713,6 +713,7 @@ async function review(finish) {
       toast("解鎖成就：" + names.join("、"));
     }
     const s = r.scores;
+    const newAchievements = (r.achievements && r.achievements.newly_unlocked) || [];
     const body = $("review-body");
     body.replaceChildren();
 
@@ -778,6 +779,10 @@ async function review(finish) {
       body.append(ul);
     }
     openModal("review-modal");
+    if (newAchievements.length) {
+      const names = (r.achievements.badges || []).filter(b => newAchievements.includes(b.id)).map(b => b.title);
+      toast("新成就解鎖：" + names.join("、"));
+    }
     try { render(await api("/api/start", { player: S.player, persona: S.current })); }   // 取得完整標示的 state
     catch (e2) { if (!handleErr(e2)) { S.state.ended = true; render(S.state); } }
   } catch (e) {

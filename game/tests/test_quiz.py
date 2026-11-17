@@ -19,9 +19,10 @@ def solve(store, player, attempt, wrong=False):
 def test_sampling_hidden_answers_and_restart(tmp_path):
     store = Store(tmp_path)
     a = quiz.start(store, PID)['active']
-    assert len({q['id'] for q in a['questions']}) == 6
+    assert len({q['id'] for q in a['questions']}) == 10
+    assert all(len(q['options']) == 4 for q in a['questions'])
     actual = store.load(PID)['quiz']['active']['questions']
-    assert sum(q['red_flag'] is None for q in actual) == 1
+    assert sum(q['red_flag'] is None for q in actual) == 2
     assert all(set(q) == {'id', 'prompt', 'options'} for q in a['questions'])
     assert quiz.start(Store(tmp_path), PID)['active']['id'] == a['id']
     q = a['questions'][0]
@@ -35,7 +36,7 @@ def test_scoring_history_and_duplicate_submission(tmp_path):
     store = Store(tmp_path)
     a = quiz.start(store, PID)['active']
     result = solve(store, PID, a)
-    assert result['active']['score'] == result['best_score'] == 6
+    assert result['active']['score'] == result['best_score'] == 10
     assert result['completed_count'] == len(result['history']) == 1
     last = result['active']['answers'][-1]
     retry = quiz.answer(store, PID, a['id'], last['question_id'], last['choice'], 3)
@@ -44,11 +45,11 @@ def test_scoring_history_and_duplicate_submission(tmp_path):
     assert second['id'] != a['id']
     result = solve(store, PID, second, wrong=True)
     assert result['active']['score'] == 0
-    assert result['best_score'] == 6 and result['completed_count'] == 2
+    assert result['best_score'] == 10 and result['completed_count'] == 2
     assert Store(tmp_path).load(PID)['quiz']['completed_count'] == 2
 
 
-@pytest.mark.parametrize('choice,confidence', [(True, 1), ('0', 1), (-1, 1), (3, 1), (0, True), (0, 0), (0, 4), (None, 1)])
+@pytest.mark.parametrize('choice,confidence', [(True, 1), ('0', 1), (-1, 1), (4, 1), (0, True), (0, 0), (0, 4), (None, 1)])
 def test_invalid_inputs_do_not_change_progress(tmp_path, choice, confidence):
     store = Store(tmp_path)
     a = quiz.start(store, PID)['active']
@@ -98,7 +99,7 @@ def test_http_auth_isolation_and_server_score(secure):
     answers = secure.game.store.load(PID)['quiz']['active']['questions']
     for q in answers:
         status, data = secure('/api/quiz/answer', {'player': PID, 'attempt_id': a['id'],
-            'question_id': q['id'], 'choice': (q['answer'] + 1) % 3, 'confidence': 3, 'score': 999}, token=token)
+            'question_id': q['id'], 'choice': (q['answer'] + 1) % 4, 'confidence': 3, 'score': 999}, token=token)
         assert status == 200
     assert data['active']['score'] == 0
     assert secure('/api/quiz/state', {'player': 'other-player'}, token=token)[0] == 401

@@ -21,7 +21,7 @@ def profile_with(e, pid='avoidant'):
 
 def test_catalog_is_empty():
     result = achievements.sync({})
-    assert len(result['badges']) == 8 and not ids(result)
+    assert len(result['badges']) == 19 and not ids(result)
     assert all(b['progress'] == 0 and b['unlocked_at'] is None for b in result['badges'])
 
 
@@ -108,7 +108,7 @@ def test_quiz_hook_persistence_and_delete(tmp_path):
         quiz.answer(store, PID, a['id'], q['id'], q['answer'], 2)
     saved = Store(tmp_path).load(PID)
     assert {'quiz_complete', 'quiz_perfect'} <= saved['achievements'].keys()
-    assert ids(achievements.state(Store(tmp_path), PID)) == {'quiz_complete', 'quiz_perfect'}
+    assert {'quiz_complete', 'quiz_perfect', 'quiz_seven', 'quiz_nine', 'quiz_red', 'quiz_normal'} <= ids(achievements.state(Store(tmp_path), PID))
     quiz.start(store, PID)
     assert 'quiz_perfect' in ids(achievements.state(store, PID))
     store.delete(PID)
