@@ -5,6 +5,7 @@ import json
 import secrets
 import time
 from pathlib import Path
+from . import achievements
 
 QUESTIONS = json.loads((Path(__file__).resolve().parent.parent / 'data/quiz.json').read_text(encoding='utf-8'))
 HISTORY_LIMIT = 20
@@ -71,5 +72,6 @@ def answer(store, player, attempt_id, question_id, choice, confidence):
             data['history'].append({'id': attempt['id'], 'score': attempt['score'], 'total': len(attempt['questions']),
                                     'completed_at': attempt['completed_at']})
             data['history'] = data['history'][-HISTORY_LIMIT:]
+            achievements.sync(profile)
         store.save(profile)
         return _view(data)
