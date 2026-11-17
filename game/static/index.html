@@ -84,8 +84,8 @@
         <label class="check"><input type="checkbox" id="consent-ok"> <span>我已滿 18 歲，了解以上說明，願意開始。</span></label>
       </section>
       <p id="consent-done" class="fine hidden"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>你已同意使用說明　<button id="btn-consent-show" class="linkbtn">重看說明</button></p>
-      <div class="home-extras" aria-label="更多功能（即將推出）">
-        <button class="extra" data-soon="quiz"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-note"/></svg></span>戀愛腦小測驗<em>即將推出</em></button>
+      <div class="home-extras" aria-label="更多功能">
+        <button class="extra" data-quiz><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-note"/></svg></span>戀愛腦小測驗<em>6 題練習</em></button>
         <button class="extra" data-soon="club"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-users"/></svg></span>暈船互助會<em>即將推出</em></button>
         <button class="extra" data-soon="badges"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-medal"/></svg></span>我的成就<em>即將推出</em></button>
       </div>
@@ -120,8 +120,8 @@
         <h3>教練的紀錄</h3>
         <ul id="history-list"></ul>
       </div>
-      <div class="soon-row" aria-label="即將推出">
-        <button class="extra" data-soon="quiz"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-note"/></svg></span>小測驗<em>即將推出</em></button>
+      <div class="soon-row" aria-label="更多功能">
+        <button class="extra" data-quiz><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-note"/></svg></span>小測驗<em>6 題練習</em></button>
         <button class="extra" data-soon="club"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-users"/></svg></span>暈船互助會<em>即將推出</em></button>
         <button class="extra" data-soon="badges"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-medal"/></svg></span>成就<em>即將推出</em></button>
       </div>
@@ -213,8 +213,8 @@
         <button class="icon-btn" data-close aria-label="關閉"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-x"/></svg></button>
       </div>
       <div id="review-body"></div>
-      <div class="soon-row" aria-label="即將推出">
-        <button class="extra" data-soon="quiz"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-note"/></svg></span>小測驗<em>即將推出</em></button>
+      <div class="soon-row" aria-label="更多功能">
+        <button class="extra" data-quiz><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-note"/></svg></span>小測驗<em>6 題練習</em></button>
         <button class="extra" data-soon="club"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-users"/></svg></span>互助會<em>即將推出</em></button>
         <button class="extra" data-soon="badges"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-medal"/></svg></span>成就<em>即將推出</em></button>
       </div>
@@ -290,6 +290,17 @@
     </div>
   </div>
 
+  <div class="modal hidden" id="quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-title">
+    <div class="sheet wide">
+      <div class="sheet-head">
+        <h2 id="quiz-title">戀愛腦小測驗</h2>
+        <button class="icon-btn" data-close aria-label="關閉小測驗">×</button>
+      </div>
+      <p class="fine">練習辨識互動中的紅旗，保留自己的判斷。這不是心理診斷，也不能保證防詐。</p>
+      <div id="quiz-content" aria-live="polite"></div>
+    </div>
+  </div>
+
   <!-- 即將推出 -->
   <div class="modal hidden" id="soon-modal" role="dialog" aria-modal="true" aria-labelledby="soon-title">
     <div class="sheet">
@@ -315,5 +326,6 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </div>
 <script src="app.js"></script>
+<script src="quiz.js"></script>
 </body>
 </html>

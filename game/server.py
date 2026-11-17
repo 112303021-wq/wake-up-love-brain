@@ -41,7 +41,7 @@ from urllib.parse import parse_qs, urlparse
 GAME_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(GAME_DIR))
 
-from engine import coach, safety  # noqa: E402
+from engine import coach, safety, quiz  # noqa: E402
 from engine.game import Game, GameError, dev_enabled  # noqa: E402
 from engine.llm import get_llm  # noqa: E402
 from engine.personas import PersonaLoadError, load_personas  # noqa: E402
@@ -333,6 +333,11 @@ def make_handler(game: Game):
                 player = lambda: _player(b)  # noqa: E731
                 persona = lambda: _persona(game, b)  # noqa: E731
                 routes = {
+                    "/api/quiz/state": lambda: quiz.state(game.store, player()),
+                    "/api/quiz/start": lambda: quiz.start(game.store, player()),
+                    "/api/quiz/answer": lambda: quiz.answer(
+                        game.store, player(), b.get("attempt_id"), b.get("question_id"),
+                        b.get("choice"), b.get("confidence")),
                     "/api/nickname": lambda: game.set_nickname(player(), _str(b, "nickname", False)) or {"ok": True},
                     "/api/prefs": lambda: {"prefs": game.set_prefs(player(), b.get("prefs"))},
                     "/api/consent": lambda: {"consent": game.set_consent(

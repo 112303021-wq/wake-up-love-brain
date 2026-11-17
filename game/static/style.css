@@ -557,3 +557,21 @@ button, input, select { font: inherit; color: inherit; }
 
 /* 選項區可捲動提示：底部漸層（不攔截點擊、不遮 focus 外框） */
 .choices::after { content: ""; position: sticky; bottom: -1px; flex: none; height: 14px; margin-top: -14px; pointer-events: none; background: linear-gradient(to bottom, transparent, var(--surface)); }
+
+/* 情境小測驗：沿用主題色、原生表單與既有對話框焦點管理。 */
+.quiz-progress { width: 100%; height: 10px; accent-color: var(--accent); }
+.quiz-situation { padding: 20px; border-left: 4px solid var(--accent); background: var(--surface-2); border-radius: 8px; font-size: 1.1rem; }
+.quiz-options { border: 0; padding: 0; margin: 18px 0; min-width: 0; }
+.quiz-options legend { margin-bottom: 12px; font-weight: 600; }
+.quiz-option { display: flex; gap: 12px; align-items: center; padding: 14px; margin: 8px 0; border: 1px solid var(--line); border-radius: 12px; cursor: pointer; }
+.quiz-option:has(input:checked) { background: var(--accent-soft); border-color: var(--accent); }
+.quiz-option input { flex: 0 0 auto; accent-color: var(--accent); width: 18px; height: 18px; }
+.quiz-confidence { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 18px 0; }
+.quiz-confidence select { padding: 10px; border: 1px solid var(--field-line); background: var(--surface); border-radius: 8px; }
+.quiz-form > button { width: 100%; }
+.quiz-review { margin: 16px 0; padding: 16px; border: 1px solid var(--line); border-radius: 12px; }
+.quiz-review h4 { margin: 0; }
+.quiz-correct { border-left: 4px solid var(--good); }
+.quiz-wrong { border-left: 4px solid var(--bad); }
+.quiz-insight { color: var(--accent); font-weight: 600; }
+.quiz-score { font-size: 1.6rem; color: var(--heading); }
