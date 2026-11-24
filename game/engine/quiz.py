@@ -45,6 +45,7 @@ def _view(data):
         # Old unfinished 6-question attempts are saved on start, not silently deleted.
         out['active'] = None
     elif attempt:
+        attempt.pop('_completion_badges', None)
         attempt['questions'] = [{k: q[k] for k in ('id', 'prompt', 'options')} for q in attempt['questions']]
     out.pop('previous_incomplete', None)
     return out
@@ -91,7 +92,10 @@ def answer(store, player, attempt_id, question_id, choice, confidence):
         for saved in attempt['answers']:
             if saved['question_id'] == question_id:
                 if saved['choice'] == choice and saved['confidence'] == confidence:
-                    return _view(data)
+                    result = _view(data)
+                    if attempt.get('completed') and '_completion_badges' in attempt:
+                        result['new_badges'] = list(attempt['_completion_badges'])
+                    return result
                 raise ValueError('這題已確認答案，不能更改。')
         if attempt['completed']:
             raise ValueError('這份測驗已完成。')
@@ -125,9 +129,11 @@ def answer(store, player, attempt_id, question_id, choice, confidence):
             earned = achievements.sync(profile)
         else:
             earned = None
+        if earned is not None:
+            attempt['_completion_badges'] = [b['title'] for b in earned['badges']
+                                              if b['id'] in earned['newly_unlocked']]
         store.save(profile)
         result = _view(data)
-        if earned:
-            result['new_badges'] = [b['title'] for b in earned['badges']
-                                    if b['id'] in earned['newly_unlocked']]
+        if earned is not None:
+            result['new_badges'] = list(attempt['_completion_badges'])
         return result
