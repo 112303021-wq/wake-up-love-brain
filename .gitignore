@@ -1,6 +1,7 @@
 # 只追蹤 game/ 與 personas/，其餘（簡報、討論檔、備份、工具設定）一律忽略
 /*
 !/.gitignore
+!/README.md
 !/game/
 !/personas/
 
