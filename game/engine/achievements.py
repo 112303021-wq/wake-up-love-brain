@@ -50,11 +50,15 @@ def sync(profile):
     seen_sessions = set()
     for i, r in enumerate(reviews):
         identity = r.get('session_at')
+        # Legacy summaries without stats are not evidence on their own.
+        # Leave their session ids available for reconstruction from saved sessions.
+        if not isinstance(r.get('achievement_stats'), dict):
+            continue
         if identity is not None:
             if identity in seen_sessions:
                 continue
             seen_sessions.add(identity)
-        evidence.append((r.get('persona_id'), r.get('achievement_stats', {}), r.get('awake_score', 0)))
+        evidence.append((r.get('persona_id'), r['achievement_stats'], r.get('awake_score', 0)))
     # Recover only existing reviewed sessions when an old summary lacks stats;
     # avoid counting the same session twice when its summary exists.
     for pid, st in profile.get('sessions', {}).items():
